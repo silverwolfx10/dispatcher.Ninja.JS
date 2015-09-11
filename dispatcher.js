@@ -1,6 +1,15 @@
 /**
  * $dispatcher
  * 
+ * Um mediador utilizado para escultar eventos e disparar eventos,
+ * permitindo que seus modulos sejam fracamente dependentes de outros modulos
+ * 
+ * @module $dispatcher
+ * @author Cleber de Moraes Goncalves <cleber.programmer>
+ * @example
+ * 
+ *        $dispatcher.on('channel', function () {});
+ * 
  */
 this.Ninja.module('$dispatcher', [], function () {
   
