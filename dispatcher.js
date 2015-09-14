@@ -11,7 +11,7 @@
  *        $dispatcher.on('channel', function () {});
  * 
  */
-this.Ninja.module('$dispatcher', [], function () {
+this.Ninja.module('$dispatcher', ['$curry'], function ($curry) {
   
   /**
    * 
@@ -33,6 +33,29 @@ this.Ninja.module('$dispatcher', [], function () {
   }
   
   /**
+   * 
+   */
+  function off(channel, callback, context) {
+    find(channel).splice(find(channel).indexOf(find(channel).filter(compare.bind(null, callback, context))[0]), 1);
+  }
+  
+  /**
+   * 
+   */
+  function on(channel, callback, context) {
+    find(channel).push({ callback: callback, context: context });
+  }
+  
+  /**
+   * 
+   */
+  function trigger(channel, parameters) {
+    find(channel).forEach(function (item) {
+      item.callback.call(item.context || item.callback, parameters);
+    });
+  }
+  
+  /**
    * Revelacao do modulo $dispatcher, encapsulando a visibilidade das funcoes
    * privadas
    */
@@ -41,25 +64,17 @@ this.Ninja.module('$dispatcher', [], function () {
     /**
      * 
      */
-    on: function (channel, callback, context) {
-      find(channel).push({ callback: callback, context: context });
-    },
+    on: $curry(on),
 
     /**
      * 
      */
-    off: function (channel, callback, context) {
-      find(channel).splice(find(channel).indexOf(find(channel).filter(compare.bind(null, callback, context))[0]), 1);
-    },
+    off: $curry(off),
 
     /**
      * 
      */
-    trigger: function (channel, parameters) {
-      find(channel).forEach(function (item) {
-        item.callback.call(item.context || item.callback, parameters);
-      });
-    }
+    trigger: $curry(trigger)
 
   };
   
