@@ -11,12 +11,19 @@
  *        $dispatcher.on('channel', function () {});
  * 
  */
-this.Ninja.module('$dispatcher', ['$curry'], function ($curry) {
+this.Ninja.module('$dispatcher', ['$curry'], function Dispatcher($curry) {
   
   /**
    * 
    */
   var listeners = {};
+  
+  /**
+   * 
+   */
+  function clone() {
+    return Dispatcher($curry);
+  }
 
   /**
    * 
@@ -60,6 +67,11 @@ this.Ninja.module('$dispatcher', ['$curry'], function ($curry) {
    * privadas
    */
   return {
+    
+    /**
+     * 
+     */
+    clone: clone,
 
     /**
      * 
